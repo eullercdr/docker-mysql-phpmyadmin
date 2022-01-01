@@ -1,0 +1,21 @@
+version: "3.3"
+volumes:
+  data:
+services:
+  app:
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+      - db
+    ports:
+      - 80:80
+    environment:
+      - PMA_ARBITRARY=1
+  db:
+    build: ./.docker/mysql
+    restart: always
+    tty: true
+    volumes:
+      - ./.docker/dbdata:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=fin
+      - MYSQL_ROOT_PASSWORD=root
